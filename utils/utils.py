@@ -4,6 +4,11 @@
 from Queue import deque
 
 
+class ListNode(object):
+    def __init__(self, x):
+        self.val = x
+        self.next = None
+
 
 class TreeNode(object):
     def __init__(self, x):
