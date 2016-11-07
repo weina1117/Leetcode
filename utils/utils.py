@@ -9,6 +9,18 @@ class ListNode(object):
         self.val = x
         self.next = None
 
+def get_list_head(nums):
+    if not nums:
+        return None
+    i = 0
+    head = ListNode(nums[i])
+    p = head
+    i += 1
+    while i < len(nums):
+        p.next = ListNode(nums[i])
+        i += 1
+    return head
+
 
 class TreeNode(object):
     def __init__(self, x):
@@ -17,24 +29,22 @@ class TreeNode(object):
         self.right = None
 
 
-def deserialize(data):
-    def _deserialize_list(data):
-        if not data:
-            return None
-
-        val = data.pop(0)
-        if not val:
-            return None
-
-        node = TreeNode(int(val))
-        node.left = _deserialize_list(data)
-        node.right = _deserialize_list(data)
-        return node
-
-    if not data:
-        return None
-
-    return _deserialize_list(data.split(','))
-
-tree = deserialize('1,2,3,4,5')
-print tree
+def parse_list_to_tree(nums):
+    if not nums:
+        return []
+    q = deque()
+    q.append(nums[0])
+    i = 1
+    root = TreeNode(q[0])
+    r = root
+    while len(q) > 0:
+        if i < len(nums) and nums[i]:
+            q.append(nums[i])
+            r.left = TreeNode(nums[i])
+        if i+1 < len(nums) and nums[i+1]:
+            q.append(nums[i+1])
+            r.right = TreeNode(nums[i+1])
+        q.popleft()
+        r = TreeNode(q.popleft())
+        i += 2
+    return root
